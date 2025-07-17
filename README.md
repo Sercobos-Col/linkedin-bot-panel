@@ -1,2 +1,0 @@
-DATABASE_URL=mi_base_de_datos
-API_KEY=mi_clave_secreta
