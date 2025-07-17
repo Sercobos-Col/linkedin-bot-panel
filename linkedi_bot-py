@@ -40,3 +40,5 @@ def run_bot(email, password, keywords, location="Global"):
     driver.quit()
     st_msg = f"Aplicaciones enviadas: {applied}."
     print(st_msg)
+def run_bot(email, password, keywords, location="Global"):
+    ...
