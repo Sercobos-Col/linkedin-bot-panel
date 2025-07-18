@@ -1,38 +1,35 @@
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-def run_bot(email, password, keywords, location="Global"):
-    options = webdriver.ChromeOptions()
-    options.add_argument("--headless")
+def run_bot(email, password, keywords, ubicacion):
+    # Configurar opciones para correr sin interfaz gráfica (ideal para la nube)
+    options = Options()
+    options.add_argument("--headless")  # Modo sin ventana
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
-    driver = webdriver.Chrome(options=options)
 
-    driver.get("https://www.linkedin.com/login")
-    time.sleep(2)
+    # Crear el driver con WebDriver Manager (descarga automática del driver correcto)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
-    driver.find_element(By.ID, "username").send_keys(email)
-    driver.find_element(By.ID, "password").send_keys(password)
-    driver.find_element(By.XPATH, "//button[@type='submit']").click()
-    time.sleep(2)
+    try:
+        # Lógica de inicio de sesión, búsqueda y aplicación
+        driver.get("https://www.linkedin.com/login")
+        time.sleep(2)
 
-    driver.get("https://www.linkedin.com/jobs")
-    time.sleep(2)
-    search_input = driver.find_element(By.XPATH, "//input[contains(@aria-label,'Buscar empleos')]")
-    search_input.send_keys(keywords)
-    search_input.send_keys(Keys.RETURN)
-    time.sleep(5)
+        # Autenticación
+        driver.find_element("id", "username").send_keys(email)
+        driver.find_element("id", "password").send_keys(password)
+        driver.find_element("xpath", "//button[@type='submit']").click()
+        time.sleep(3)
 
-    jobs = driver.find_elements(By.CLASS_NAME, "job-card-container")[:5]
-    applied = 0
-    for job in jobs:
-        try:
-            job.click()
-            time.sleep(1)
-            btn = driver.find_element(By.CLASS_NAME, "jobs-apply-button")
-            btn.click()
-            time.sleep(1)
-            submit_btn = driver.find_element(By.XPATH, "//button[@aria-label='Enviar solicitud']")
-            submit_btn.click()
-            applied += 1
+        # Aquí va tu lógica para búsqueda de empleo, etc.
+        print("Bot iniciado correctamente. 🧠🚀")
+
+    except Exception as e:
+        print(f"Error al ejecutar el bot: {e}")
+
+    finally:
+        driver.quit()
