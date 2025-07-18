@@ -36,4 +36,3 @@ def run_bot(email, password, keywords, location="Global"):
             submit_btn = driver.find_element(By.XPATH, "//button[@aria-label='Enviar solicitud']")
             submit_btn.click()
             applied += 1
-        except:
