@@ -1,4 +1,5 @@
 streamlit
 selenium
-webdriver-manager
+from webdriver_manager.chrome import ChromeDriverManager
+driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 python-dotenv
