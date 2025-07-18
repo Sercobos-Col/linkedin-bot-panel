@@ -37,19 +37,3 @@ def run_bot(email, password, keywords, location="Global"):
             submit_btn.click()
             applied += 1
         except:
-            from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-def run_bot(email, password, keywords, ubicacion):
-    options = Options()
-    options.add_argument("--headless")  # <- aquí está la magia
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-
-    driver = webdriver.Chrome(options=options)
-
-    # continúa el código...
-
-            continue
-    driver.quit()
-    print(f"Aplicaciones enviadas: {applied}")
