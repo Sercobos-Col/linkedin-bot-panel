@@ -3,8 +3,11 @@ import time
 
 def run_bot(email, password, keywords, ubicacion):
     with sync_playwright() as p:
-        # Usamos el binario de Chromium instalado
-        browser = p.chromium.launch(executable_path="/usr/bin/google-chrome-stable", headless=True)
+        # Usar "headless" y habilitar configuración adicional
+        browser = p.chromium.launch(
+            headless=True, 
+            args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
+        )
         page = browser.new_page()
 
         # Iniciar sesión en LinkedIn
