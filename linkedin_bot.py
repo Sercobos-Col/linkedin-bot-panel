@@ -3,9 +3,10 @@ import time
 
 def run_bot(email, password, keywords, ubicacion):
     with sync_playwright() as p:
-        # Usar "headless" y habilitar configuración adicional
+        # Usamos el path correcto a Chromium
         browser = p.chromium.launch(
-            headless=True, 
+            headless=True,
+            executable_path="/usr/bin/google-chrome-stable",  # Usar el binario de Chrome
             args=["--no-sandbox", "--disable-dev-shm-usage", "--disable-gpu"]
         )
         page = browser.new_page()
