@@ -1,12 +1,13 @@
-import streamlit as st, os
+import streamlit as st
 from linkedin_bot import run_bot
 
+# Título de la app en Streamlit
 st.set_page_config(page_title="Bot LinkedIn - Sercobos", layout="centered")
 st.title("🤖 Bot Automático de LinkedIn")
 st.subheader("Aplicador Global – Powered by Sergio Cobos")
 
-email = st.text_input("Correo LinkedIn", value=os.getenv("LINKEDIN_USERNAME"))
-password = st.text_input("Contraseña", type="password", value=os.getenv("LINKEDIN_PASSWORD"))
+email = st.text_input("Correo LinkedIn")
+password = st.text_input("Contraseña", type="password")
 keywords = st.text_input("Palabras clave", value="Ingeniero Civil, Oil & Gas, Jefe de Producción")
 ubicacion = st.text_input("Ubicación", value="Global")
 
