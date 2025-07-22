@@ -1,15 +1,30 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+from playwright.sync_api import sync_playwright
+import time
 
 def run_bot(email, password, keywords, ubicacion):
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
 
-    # 🔧 AQUÍ la corrección definitiva:
-    service = Service(ChromeDriverManager().install())
-    driver = webdriver.Chrome(service=service, options=options)
+        # Iniciar sesión en LinkedIn
+        page.goto("https://www.linkedin.com/login")
+        page.fill('input[name="session_key"]', email)
+        page.fill('input[name="session_password"]', password)
+        page.click('button[type="submit"]')
+
+        # Esperar carga
+        page.wait_for_load_state('networkidle')
+        time.sleep(3)
+
+        # Buscar ofertas
+        page.goto("https://www.linkedin.com/jobs")
+        page.wait_for_load_state('networkidle')
+        page.fill('input[placeholder="Buscar empleos"]', keywords)
+        page.fill('input[placeholder="Ubicación"]', ubicacion)
+        page.keyboard.press("Enter")
+        time.sleep(5)
+
+        # Aquí va tu lógica para aplicar a ofertas (scraping de ofertas)
+        print("✅ Bot ejecutado con éxito 🚀")
+
+        browser.close()
