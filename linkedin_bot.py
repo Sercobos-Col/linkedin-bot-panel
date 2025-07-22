@@ -4,7 +4,7 @@ import time
 
 def run_bot(email, password, keywords, ubicacion):
     options = Options()
-    options.add_argument("--headless")  # Ejecuta sin interfaz gráfica
+    options.add_argument("--headless")  # Ejecutar en modo sin interfaz gráfica
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
 
